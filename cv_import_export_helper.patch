@@ -1,0 +1,13 @@
+--- /opt/theforeman/tfm/root/usr/share/gems/gems/hammer_cli_katello-0.16.0.11/lib/hammer_cli_katello/cv_import_export_helper.rb	2019-07-16 10:55:42.295651195 +0530
++++ /opt/theforeman/tfm/root/usr/share/gems/gems/hammer_cli_katello-0.16.0.11/lib/hammer_cli_katello/cv_import_export_helper_new.rb	2019-07-16 11:00:19.096526339 +0530
+@@ -54,7 +54,9 @@
+ 
+     def check_repo_download_policy(repositories)
+       non_immediate = repositories.select do |repo|
+-        show(:repositories, 'id' => repo['library_instance_id'])['download_policy'] != 'immediate'
++        unless repo['library_instance_id'].nil?
++          show(:repositories, 'id' => repo['library_instance_id'])['download_policy'] != 'immediate'
++        end
+       end
+       unless non_immediate.empty?
+         non_immediate_names = repositories.collect { |repo| repo['name'] }
